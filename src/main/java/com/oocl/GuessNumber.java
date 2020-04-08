@@ -51,7 +51,7 @@ public class GuessNumber {
 
     public int getNumberFromList(List<Integer> numberList){
         Random random = new Random();
-        int randomIndex = random.nextInt(numberList.size())+ 1;
+        int randomIndex = random.nextInt(numberList.size());
         int result = numberList.get(randomIndex);
         numberList.remove(randomIndex);
         return result;

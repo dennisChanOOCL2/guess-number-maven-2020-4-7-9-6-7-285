@@ -14,7 +14,7 @@ public class GuessNumberTest {
         GuessNumber guessNumber = new GuessNumber();
         guessNumber.startGame();
 
-        
+        System.out.print(guessNumber.getAnswer());
     }
 
 
