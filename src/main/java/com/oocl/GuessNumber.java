@@ -1,15 +1,15 @@
 package com.oocl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class GuessNumber {
 
+    private final int answerDigit = 4;
     private static int chance = 6;
     private String answer = "1234";
+
 
     public static void setChance(int chance) {
         GuessNumber.chance = chance;
@@ -25,11 +25,22 @@ public class GuessNumber {
     }
 
     public String guess(String input){
-        return calculateResult();
+        return calculateResult(input);
     }
 
-    private String calculateResult(){
-        return "4A0B";
+    private String calculateResult(String input){
+
+        final ArrayList<String> result = new ArrayList<String>();
+        Arrays.asList(input.split(""))
+                .stream().forEach(element ->
+                        result.add(
+                                input.indexOf(element) ==  answer.indexOf(element) ? "A" :
+                                        answer.contains(element) ? "B" : ""
+                        )
+                );
+
+        String returnString = Collections.frequency(result, "A") + "A" + Collections.frequency(result, "B") + "B";
+        return returnString;
     }
 
     private void generateAnswer(){
@@ -41,7 +52,6 @@ public class GuessNumber {
         int thirdDigit = getNumberFromList(possibleAnsList);
         int FourthDigit = getNumberFromList(possibleAnsList);
 
-        int answerDigit = 4;
         StringBuilder answerStrBuilder = new StringBuilder(answerDigit);
         answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
         this.answer = answerStrBuilder.toString();

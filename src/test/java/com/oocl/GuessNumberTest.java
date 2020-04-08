@@ -20,4 +20,17 @@ public class GuessNumberTest {
         assertThat(result, is("4A0B"));
     }
 
+    @Test
+    public void calculate_all_number_correct_but_all_position_wrong() {
+        //given
+        GuessNumber guessNumber = new GuessNumber();
+        guessNumber.startGame();
+
+        String answer = guessNumber.getAnswerForTesting();
+        String reserveAnswer = new StringBuilder(answer).reverse().toString();
+        String result = guessNumber.guess(reserveAnswer);
+
+        assertThat(result, is("0A4B"));
+    }
+
 }
