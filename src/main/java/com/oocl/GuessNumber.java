@@ -28,7 +28,32 @@ public class GuessNumber {
     }
 
     public void startGame(){
+        generateAnswer();
+        setChance(6);
+    }
+
+    public void generateAnswer(){
+
+        List<Integer> possibleAnsList = IntStream.rangeClosed(0, 9).boxed()
+                .collect(Collectors.toList());
+
+        int firstDigit = getNumberFromList(possibleAnsList);
+        int secondDigit = getNumberFromList(possibleAnsList);
+        int thirdDigit = getNumberFromList(possibleAnsList);
+        int FourthDigit = getNumberFromList(possibleAnsList);
+
+        int answerDigit = 4;
+        StringBuilder answerStrBuilder = new StringBuilder(answerDigit);
+        answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
+        this.answer = answerStrBuilder.toString();
 
     }
 
+    public int getNumberFromList(List<Integer> numberList){
+        Random random = new Random();
+        int randomIndex = random.nextInt(numberList.size())+ 1;
+        int result = numberList.get(randomIndex);
+        numberList.remove(randomIndex);
+        return result;
+    }
 }
