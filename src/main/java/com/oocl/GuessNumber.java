@@ -25,12 +25,22 @@ public class GuessNumber {
     }
 
     public String guess(String input){
+
+        if(calculateResult(input) == "4A0B"){
+            return "You Win !";
+        }
+
+        setChance(chance--);
+        if(chance == 0){
+            return "You Lose !";
+        }
+
         return calculateResult(input);
     }
 
     private String calculateResult(String input){
 
-        final ArrayList<String> result = new ArrayList<String>();
+        final ArrayList<String> result = new ArrayList();
         Arrays.asList(input.split(""))
                 .stream().forEach(element ->
                         result.add(
