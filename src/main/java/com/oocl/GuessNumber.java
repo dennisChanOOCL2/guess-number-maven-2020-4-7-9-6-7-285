@@ -11,20 +11,12 @@ public class GuessNumber {
     private static int chance = 6;
     private String answer = "1234";
 
-    public static int getChance() {
-        return chance;
-    }
-
     public static void setChance(int chance) {
         GuessNumber.chance = chance;
     }
 
-    public String getAnswer() {
+    public final String getAnswer() {
         return answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
     }
 
     public void startGame(){
@@ -32,8 +24,7 @@ public class GuessNumber {
         setChance(6);
     }
 
-    public void generateAnswer(){
-
+    private void generateAnswer(){
         List<Integer> possibleAnsList = IntStream.rangeClosed(0, 9).boxed()
                 .collect(Collectors.toList());
 
@@ -49,7 +40,7 @@ public class GuessNumber {
 
     }
 
-    public int getNumberFromList(List<Integer> numberList){
+    private int getNumberFromList(List<Integer> numberList){
         Random random = new Random();
         int randomIndex = random.nextInt(numberList.size());
         int result = numberList.get(randomIndex);
