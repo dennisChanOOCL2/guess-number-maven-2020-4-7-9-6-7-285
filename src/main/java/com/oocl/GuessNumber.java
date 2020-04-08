@@ -26,16 +26,22 @@ public class GuessNumber {
 
     public String guess(String input){
 
-        if(calculateResult(input) == "4A0B"){
-            return "You Win !";
+        String errorMessage = validInput(input);
+        if (errorMessage == "") {
+            if (calculateResult(input) == "4A0B") {
+                return "You Win !";
+            }
+
+            setChance(chance--);
+            if (chance == 0) {
+                return "You Lose !";
+            }
+
+            return calculateResult(input);
+        } else {
+            return errorMessage;
         }
 
-        setChance(chance--);
-        if(chance == 0){
-            return "You Lose !";
-        }
-
-        return calculateResult(input);
     }
 
     private String calculateResult(String input){
@@ -67,6 +73,17 @@ public class GuessNumber {
         this.answer = answerStrBuilder.toString();
 
     }
+
+    private String validInput(String input){
+
+        if (input.length() == answerDigit ) {
+            return "";
+        }
+        return "Wrong Input，Input again";
+    }
+
+
+
 
     private int getNumberFromList(List<Integer> numberList){
         Random random = new Random();

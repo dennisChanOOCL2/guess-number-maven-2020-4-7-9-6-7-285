@@ -58,8 +58,19 @@ public class GuessNumberTest {
         StringBuilder input = new StringBuilder(answerDigit);
         input.append(answer.charAt(0)).append(reserveAnswer.charAt(0)).append(possibleAnsList.get(0)).append(possibleAnsList.get(1));
 
-
         String result = guessNumber.guess(input.toString());
         assertThat(result, is("1A1B"));
     }
+
+    @Test
+    public void invalid_input_not_enough_digit() {
+        //given
+        GuessNumber guessNumber = new GuessNumber();
+        guessNumber.startGame();
+
+        String result = guessNumber.guess("11");
+
+        assertThat(result, is("Wrong Input，Input again"));
+    }
+
 }
