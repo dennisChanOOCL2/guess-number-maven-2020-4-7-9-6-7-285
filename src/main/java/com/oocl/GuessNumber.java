@@ -6,13 +6,15 @@ import java.util.stream.IntStream;
 
 public class GuessNumber {
 
-    private final int answerDigit = 4;
-    private static int chance = 6;
-    private String answer = "1234";
+    public static final int answerLength = 4;
+    private int chance = 6;
+    public static final String winMessage = "You Win !";
+    public static final String loseMessage = "You Lose !";
+    private String answer;
 
 
-    public static void setChance(int chance) {
-        GuessNumber.chance = chance;
+    private void setChance(int chance) {
+        this.chance = chance;
     }
 
     public final String getAnswerForTesting() {
@@ -29,15 +31,15 @@ public class GuessNumber {
         String errorMessage = validInput(input);
         if (errorMessage == "") {
             if (calculateResult(input) == "4A0B") {
-                return "You Win !";
+                return winMessage;
             }
 
             setChance(chance--);
             if (chance == 0) {
-                return "You Lose !";
+                return loseMessage;
             }
-
             return calculateResult(input);
+
         } else {
             return errorMessage;
         }
@@ -68,7 +70,7 @@ public class GuessNumber {
         int thirdDigit = getNumberFromList(possibleAnsList);
         int FourthDigit = getNumberFromList(possibleAnsList);
 
-        StringBuilder answerStrBuilder = new StringBuilder(answerDigit);
+        StringBuilder answerStrBuilder = new StringBuilder(answerLength);
         answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
         this.answer = answerStrBuilder.toString();
 
@@ -81,7 +83,7 @@ public class GuessNumber {
             return "Wrong Input，Input again";
         }
 
-        if (input.length() == answerDigit ) {
+        if (input.length() == answerLength) {
             return "";
         }
         return "Wrong Input，Input again";
@@ -89,7 +91,7 @@ public class GuessNumber {
 
     private boolean checkInputHasDuplicate(String input){
         List<String> inputStringList = Arrays.asList(input.split(""));
-        String checking = inputStringList.stream().filter(element -> Collections.frequency(inputStringList, element) > 0)
+        String checking = inputStringList.stream().filter(element -> Collections.frequency(inputStringList, element) > 1)
                 .findFirst()
                 .orElse("");
         if(checking.equals("")){

@@ -4,16 +4,16 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class GuessNumberTest {
-    private final int answerDigit = 4;
+
     @Test
     public void calculate_all_number_and_position_correct() {
         //given
@@ -55,7 +55,7 @@ public class GuessNumberTest {
                 element -> possibleAnsList.remove((Object)Integer.parseInt(element))
         );
 
-        StringBuilder input = new StringBuilder(answerDigit);
+        StringBuilder input = new StringBuilder(guessNumber.answerLength);
         input.append(answer.charAt(0)).append(reserveAnswer.charAt(0)).append(possibleAnsList.get(0)).append(possibleAnsList.get(1));
 
         String result = guessNumber.guess(input.toString());
@@ -82,6 +82,22 @@ public class GuessNumberTest {
         String result = guessNumber.guess("1124");
 
         assertThat(result, is("Wrong Input，Input again"));
+    }
+
+    public static void main (String[] args) {
+        //given
+        GuessNumber guessNumber = new GuessNumber();
+        guessNumber.startGame();
+        String result = "";
+        Scanner userInputScanner = new Scanner(System.in);
+        System.out.println("Welcome! Game Start now !");
+
+        while(result != guessNumber.winMessage && result != guessNumber.loseMessage){
+            System.out.println("Please enter a 4 digit number: ");
+            String input = userInputScanner.nextLine();
+            result = guessNumber.guess(input);
+
+        }
     }
 
 }
