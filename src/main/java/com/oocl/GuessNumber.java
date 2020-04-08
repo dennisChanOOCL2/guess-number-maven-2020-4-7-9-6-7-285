@@ -30,11 +30,11 @@ public class GuessNumber {
 
         String errorMessage = validInput(input);
         if (errorMessage == "") {
-            if (calculateResult(input) == "4A0B") {
+            if (calculateResult(input).equals("4A0B")) {
                 return winMessage;
             }
 
-            setChance(chance--);
+            setChance(chance-1);
             if (chance == 0) {
                 return loseMessage;
             }

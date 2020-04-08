@@ -84,6 +84,7 @@ public class GuessNumberTest {
         assertThat(result, is("Wrong Input，Input again"));
     }
 
+
     public static void main (String[] args) {
         //given
         GuessNumber guessNumber = new GuessNumber();
