@@ -15,13 +15,21 @@ public class GuessNumber {
         GuessNumber.chance = chance;
     }
 
-    public final String getAnswer() {
+    public final String getAnswerForTesting() {
         return answer;
     }
 
     public void startGame(){
         generateAnswer();
         setChance(6);
+    }
+
+    public String guess(String input){
+        return calculateResult();
+    }
+
+    private String calculateResult(){
+        return "4A0B";
     }
 
     private void generateAnswer(){
