@@ -75,6 +75,11 @@ public class GuessNumber {
     }
 
     private String validInput(String input){
+        boolean hasDuplicate = checkInputHasDuplicate(input);
+
+        if(hasDuplicate){
+            return "Wrong Input，Input again";
+        }
 
         if (input.length() == answerDigit ) {
             return "";
@@ -82,7 +87,16 @@ public class GuessNumber {
         return "Wrong Input，Input again";
     }
 
-
+    private boolean checkInputHasDuplicate(String input){
+        List<String> inputStringList = Arrays.asList(input.split(""));
+        String checking = inputStringList.stream().filter(element -> Collections.frequency(inputStringList, element) > 0)
+                .findFirst()
+                .orElse("");
+        if(checking.equals("")){
+            return false;
+        }
+        return true;
+    }
 
 
     private int getNumberFromList(List<Integer> numberList){

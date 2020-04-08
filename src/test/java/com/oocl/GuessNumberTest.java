@@ -73,4 +73,15 @@ public class GuessNumberTest {
         assertThat(result, is("Wrong Input，Input again"));
     }
 
+    @Test
+    public void invalid_input_duplicate_digit() {
+        //given
+        GuessNumber guessNumber = new GuessNumber();
+        guessNumber.startGame();
+
+        String result = guessNumber.guess("1124");
+
+        assertThat(result, is("Wrong Input，Input again"));
+    }
+
 }
