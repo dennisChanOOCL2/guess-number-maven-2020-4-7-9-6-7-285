@@ -4,19 +4,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.util.Scanner;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GuessNumberPracticeTest {
 
-    private GuessNumberPractice game;
+    private GuessNumber game;
 
     @Before
     public void setUp(){
         String answer = "1234";
         AnswerGenerator answerGenerator = Mockito.mock(AnswerGenerator.class);
         Mockito.when(answerGenerator.generate()).thenReturn(answer);
-        game = new GuessNumberPractice(answerGenerator);
+        game = new GuessNumber(answerGenerator);
     }
 
 

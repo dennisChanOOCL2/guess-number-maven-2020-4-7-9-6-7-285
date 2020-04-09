@@ -13,10 +13,15 @@ public class GuessNumber {
     public static final String CORRECT_NUMBER_AND_POSITION = "A";
     public static final String CORRECT_NUMBER_BUT_WRONG_POSITION = "B";
     public static final String WIN_RESULT = "4A0B";
+    public static final String ANSWER_RESULT_PATTERN = "%sA%sB";
 
     private int chance = 6;
-    private String answer;
+    private final String answer;
 
+    public GuessNumber(AnswerGenerator answerGenerator) {
+        this.answer = answerGenerator.generate();
+        setChance(6);
+    }
 
     private void setChance(int chance) {
         this.chance = chance;
@@ -28,11 +33,6 @@ public class GuessNumber {
 
     public final String getAnswerForTesting() {
         return answer;
-    }
-
-    public void startGame(){
-        generateAnswer();
-        setChance(6);
     }
 
     public String guess(String input){
@@ -63,39 +63,40 @@ public class GuessNumber {
         return resultMessage;
     }
 
-    private String calculateResult(String input){
-        ArrayList<String> result = new ArrayList();
-        List<String> inputStringToList = Arrays.asList(input.split(""));
+    protected String calculateResult(String inputNumbers){
+        int positionAndNumberCorrectCount = 0;
+        int onlyNumberCorrectCount = 0;
+        for(char number : inputNumbers.toCharArray()){
+            boolean isPositionAndNumberCorrect = this.answer.contains(Character.toString(number))
+                    && this.answer.indexOf(number) == inputNumbers.indexOf(number);
 
-        inputStringToList.forEach(element ->
-                        result.add(
-                                input.indexOf(element) ==  answer.indexOf(element) ? CORRECT_NUMBER_AND_POSITION :
-                                        answer.contains(element) ? CORRECT_NUMBER_BUT_WRONG_POSITION : ""
-                        )
-                );
+            boolean isNumberCorrectWithWrongPosition = this.answer.contains(Character.toString(number))
+                    && this.answer.indexOf(number) != inputNumbers.indexOf(number);
 
-        String returnString = Collections.frequency(result, CORRECT_NUMBER_AND_POSITION)
-                + CORRECT_NUMBER_AND_POSITION
-                + Collections.frequency(result, CORRECT_NUMBER_BUT_WRONG_POSITION)
-                + CORRECT_NUMBER_BUT_WRONG_POSITION;
+            if(isPositionAndNumberCorrect){
+                positionAndNumberCorrectCount ++ ;
+            }
+            if(isNumberCorrectWithWrongPosition){
+                onlyNumberCorrectCount ++ ;
+            }
+        }
 
-        return returnString;
+        return String.format(ANSWER_RESULT_PATTERN, positionAndNumberCorrectCount, onlyNumberCorrectCount);
     }
 
-    private void generateAnswer(){
-        List<Integer> possibleAnsList = IntStream.rangeClosed(0, 9).boxed()
-                .collect(Collectors.toList());
-
-        int firstDigit = getNumberFromList(possibleAnsList);
-        int secondDigit = getNumberFromList(possibleAnsList);
-        int thirdDigit = getNumberFromList(possibleAnsList);
-        int FourthDigit = getNumberFromList(possibleAnsList);
-
-        StringBuilder answerStrBuilder = new StringBuilder(ANSWER_LENGTH);
-        answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
-        this.answer = answerStrBuilder.toString();
-
-    }
+//    private void generateAnswer(){
+//        List<Integer> possibleAnsList = IntStream.rangeClosed(0, 9).boxed()
+//                .collect(Collectors.toList());
+//
+//        int firstDigit = getNumberFromList(possibleAnsList);
+//        int secondDigit = getNumberFromList(possibleAnsList);
+//        int thirdDigit = getNumberFromList(possibleAnsList);
+//        int FourthDigit = getNumberFromList(possibleAnsList);
+//
+//        StringBuilder answerStrBuilder = new StringBuilder(ANSWER_LENGTH);
+//        answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
+//        this.answer = answerStrBuilder.toString();
+//    }
 
     private String validInput(String input){
         boolean hasDuplicate = checkInputHasDuplicate(input);
@@ -139,5 +140,24 @@ public class GuessNumber {
             return false;
         }
         return true;
+    }
+
+    private String calculateResult_with_steam(String input){
+        ArrayList<String> result = new ArrayList();
+        List<String> inputStringToList = Arrays.asList(input.split(""));
+
+        inputStringToList.forEach(element ->
+                result.add(
+                        input.indexOf(element) ==  answer.indexOf(element) ? CORRECT_NUMBER_AND_POSITION :
+                                answer.contains(element) ? CORRECT_NUMBER_BUT_WRONG_POSITION : ""
+                )
+        );
+
+        String returnString = Collections.frequency(result, CORRECT_NUMBER_AND_POSITION)
+                + CORRECT_NUMBER_AND_POSITION
+                + Collections.frequency(result, CORRECT_NUMBER_BUT_WRONG_POSITION)
+                + CORRECT_NUMBER_BUT_WRONG_POSITION;
+
+        return returnString;
     }
 }
