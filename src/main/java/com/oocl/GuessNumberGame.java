@@ -18,7 +18,7 @@ public class GuessNumberGame {
             result = guessNumber.guess(input);
             System.out.println(result);
         }
-        
+
         System.out.printf("The answer is %s !", guessNumber.getAnswerForTesting());
     }
 }

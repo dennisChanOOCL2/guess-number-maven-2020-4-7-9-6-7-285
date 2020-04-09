@@ -33,9 +33,9 @@ public class GuessNumber {
     public String guess(String input){
 
         String errorMessage = validInput(input);
-        String calculateInput = calculateResult(input);
+        
         if (errorMessage == "") {
-
+            String calculateInput = calculateResult(input);
             String resultMessage = checkWinLose(calculateInput);
             return resultMessage;
 
