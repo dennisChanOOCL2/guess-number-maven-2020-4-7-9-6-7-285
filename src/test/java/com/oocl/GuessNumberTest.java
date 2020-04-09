@@ -54,7 +54,7 @@ public class GuessNumberTest {
                 element -> possibleAnsList.remove((Object)Integer.parseInt(element))
         );
 
-        StringBuilder input = new StringBuilder(guessNumber.answerLength);
+        StringBuilder input = new StringBuilder(guessNumber.ANSWER_LENGTH);
         input.append(answer.charAt(0)).append(reserveAnswer.charAt(0)).append(possibleAnsList.get(0)).append(possibleAnsList.get(1));
 
         String result = guessNumber.guess(input.toString());

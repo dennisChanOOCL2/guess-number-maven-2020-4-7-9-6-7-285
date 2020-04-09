@@ -6,10 +6,11 @@ import java.util.stream.IntStream;
 
 public class GuessNumber {
 
-    public static final int answerLength = 4;
+    public static final int ANSWER_LENGTH = 4;
     private int chance = 6;
-    public static final String winMessage = "You Win !";
-    public static final String loseMessage = "You Lose !";
+    public static final String WIN_MESSAGE = "You Win !";
+    public static final String LOSE_MESSAGE = "You Lose !";
+    public static final String ERROR_MESSAGE = "Wrong Input，Input again";
     private String answer;
 
 
@@ -46,13 +47,13 @@ public class GuessNumber {
 
     private String checkWinLose(String resultMessage){
         if (resultMessage.equals("4A0B")) {
-            return winMessage;
+            return WIN_MESSAGE;
         }
 
         setChance(chance-1);
 
         if (chance == 0) {
-            return loseMessage;
+            return LOSE_MESSAGE;
         }
 
         return resultMessage;
@@ -83,7 +84,7 @@ public class GuessNumber {
         int thirdDigit = getNumberFromList(possibleAnsList);
         int FourthDigit = getNumberFromList(possibleAnsList);
 
-        StringBuilder answerStrBuilder = new StringBuilder(answerLength);
+        StringBuilder answerStrBuilder = new StringBuilder(ANSWER_LENGTH);
         answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
         this.answer = answerStrBuilder.toString();
 
@@ -92,18 +93,13 @@ public class GuessNumber {
     private String validInput(String input){
         boolean hasDuplicate = checkInputHasDuplicate(input);
 
-        if(!isNumeric(input)){
-            return "Wrong Input，Input again";
+        if(!isNumeric(input)
+                || hasDuplicate
+                || input.length() != ANSWER_LENGTH){
+            return ERROR_MESSAGE;
         }
 
-        if(hasDuplicate){
-            return "Wrong Input，Input again";
-        }
-
-        if (input.length() == answerLength) {
-            return "";
-        }
-        return "Wrong Input，Input again";
+        return "";
     }
 
     private boolean checkInputHasDuplicate(String input){

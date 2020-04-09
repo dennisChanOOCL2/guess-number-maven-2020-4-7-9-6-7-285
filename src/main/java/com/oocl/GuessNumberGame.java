@@ -12,7 +12,7 @@ public class GuessNumberGame {
         Scanner userInputScanner = new Scanner(System.in);
         System.out.println("Welcome! Game Start now !");
 
-        while(result != guessNumber.winMessage && result != guessNumber.loseMessage){
+        while(result != guessNumber.WIN_MESSAGE && result != guessNumber.LOSE_MESSAGE){
             System.out.printf("You have %s chances(s). Please enter a 4 digit number: ", guessNumber.getChance());
             String input = userInputScanner.nextLine();
             result = guessNumber.guess(input);
