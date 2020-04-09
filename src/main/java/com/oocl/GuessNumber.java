@@ -7,12 +7,14 @@ import java.util.stream.IntStream;
 public class GuessNumber {
 
     public static final int ANSWER_LENGTH = 4;
-    private int chance = 6;
     public static final String WIN_MESSAGE = "You Win !";
     public static final String LOSE_MESSAGE = "You Lose !";
     public static final String ERROR_MESSAGE = "Wrong Input，Input again";
     public static final String CORRECT_NUMBER_AND_POSITION = "A";
     public static final String CORRECT_NUMBER_BUT_WRONG_POSITION = "B";
+    public static final String WIN_RESULT = "4A0B";
+
+    private int chance = 6;
     private String answer;
 
 
@@ -48,7 +50,7 @@ public class GuessNumber {
     }
 
     private String checkWinLose(String resultMessage){
-        if (resultMessage.equals("4"+CORRECT_NUMBER_AND_POSITION+"0"+CORRECT_NUMBER_BUT_WRONG_POSITION)) {
+        if (resultMessage.equals(WIN_RESULT)) {
             return WIN_MESSAGE;
         }
 
