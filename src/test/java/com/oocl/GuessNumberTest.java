@@ -63,6 +63,14 @@ public class GuessNumberTest {
     }
 
     @Test
+    public void should_return_1A1B_when_answer_is_1234_given_input_is_5167() {
+        String inputNumbers = "5167";
+        String result = game.guess(inputNumbers);
+
+        Assert.assertEquals("0A1B", result);
+    }
+
+    @Test
     public void should_return_0A0B_when_answer_is_1234_given_input_is_5678() {
         String inputNumbers = "5678";
         String result = game.guess(inputNumbers);
