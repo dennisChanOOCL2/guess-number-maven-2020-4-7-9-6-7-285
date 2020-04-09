@@ -5,11 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GuessNumberTest {
     private GuessNumber game;
+
 
     @Before
     public void setUp() throws Exception {
@@ -97,22 +94,6 @@ public class GuessNumberTest {
 
     }
 
-    public static void main (String[] args) {
-        //given
-        AnswerGenerator answerGenerator = Mockito.mock(AnswerGenerator.class);
-        GuessNumber game = new GuessNumber(answerGenerator);
-        Scanner userInputScanner = new Scanner(System.in);
-        String result = "";
 
-        System.out.println("Welcome! Game Start now !");
-        while(result != game.WIN_MESSAGE && result != game.LOSE_MESSAGE){
-            System.out.printf("You have %s chances(s). Please enter a 4 digit number: ", game.getChance());
-            String input = userInputScanner.nextLine();
-            result = game.guess(input);
-            System.out.println(result);
-        }
-
-        System.out.printf("The answer is %s !", game.getAnswerForTesting());
-    }
 
 }
