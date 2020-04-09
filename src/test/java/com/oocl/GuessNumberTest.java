@@ -35,7 +35,7 @@ public class GuessNumberTest {
         String inputNumbers = "1234";
         String result = game.guess(inputNumbers);
 
-        Assert.assertEquals("4A0B", result);
+        Assert.assertEquals(game.WIN_MESSAGE, result);
     }
 
     @Test
@@ -46,6 +46,21 @@ public class GuessNumberTest {
         Assert.assertEquals("2A2B", result);
     }
 
+    @Test
+    public void should_return_0A4B_when_answer_is_1234_given_input_is_4321() {
+        String inputNumbers = "4321";
+        String result = game.guess(inputNumbers);
+
+        Assert.assertEquals("0A4B", result);
+    }
+
+    @Test
+    public void should_return_0A0B_when_answer_is_1234_given_input_is_5678() {
+        String inputNumbers = "5678";
+        String result = game.guess(inputNumbers);
+
+        Assert.assertEquals("0A0B", result);
+    }
 
     @Test
     public void invalid_input_not_enough_digitgiven_input_is_11() {
