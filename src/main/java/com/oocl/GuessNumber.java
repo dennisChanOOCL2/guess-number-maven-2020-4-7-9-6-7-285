@@ -64,10 +64,10 @@ public class GuessNumber {
     }
 
     private String calculateResult(String input){
-        final ArrayList<String> result = new ArrayList();
+        ArrayList<String> result = new ArrayList();
         List<String> inputStringToList = Arrays.asList(input.split(""));
 
-        inputStringToList.stream().forEach(element ->
+        inputStringToList.forEach(element ->
                         result.add(
                                 input.indexOf(element) ==  answer.indexOf(element) ? CORRECT_NUMBER_AND_POSITION :
                                         answer.contains(element) ? CORRECT_NUMBER_BUT_WRONG_POSITION : ""
@@ -110,9 +110,9 @@ public class GuessNumber {
     }
 
     private boolean checkInputHasDuplicate(String input){
-        List<String> inputStringList = Arrays.asList(input.split(""));
-        String checking = inputStringList.stream().filter(
-                element -> Collections.frequency(inputStringList, element) > 1)
+        List<String> inputStringToList = Arrays.asList(input.split(""));
+        String checking = inputStringToList.stream().filter(
+                element -> Collections.frequency(inputStringToList, element) > 1)
                 .findFirst()
                 .orElse("");
         if(checking.equals("")){
