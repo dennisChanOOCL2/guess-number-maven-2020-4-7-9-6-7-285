@@ -13,10 +13,12 @@ public class GuessNumberGame {
         System.out.println("Welcome! Game Start now !");
 
         while(result != guessNumber.winMessage && result != guessNumber.loseMessage){
-            System.out.println("Please enter a 4 digit number: ");
+            System.out.printf("You have %s chances(s). Please enter a 4 digit number: ", guessNumber.getChance());
             String input = userInputScanner.nextLine();
             result = guessNumber.guess(input);
             System.out.println(result);
         }
+        
+        System.out.printf("The answer is %s !", guessNumber.getAnswerForTesting());
     }
 }

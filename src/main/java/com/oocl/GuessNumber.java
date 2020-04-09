@@ -17,6 +17,10 @@ public class GuessNumber {
         this.chance = chance;
     }
 
+    public final int getChance (){
+        return chance;
+    }
+
     public final String getAnswerForTesting() {
         return answer;
     }
@@ -29,16 +33,11 @@ public class GuessNumber {
     public String guess(String input){
 
         String errorMessage = validInput(input);
+        String calculateInput = calculateResult(input);
         if (errorMessage == "") {
-            if (calculateResult(input).equals("4A0B")) {
-                return winMessage;
-            }
 
-            setChance(chance-1);
-            if (chance == 0) {
-                return loseMessage;
-            }
-            return calculateResult(input);
+            String resultMessage = checkWinLose(calculateInput);
+            return resultMessage;
 
         } else {
             return errorMessage;
@@ -46,11 +45,27 @@ public class GuessNumber {
 
     }
 
+    private String checkWinLose(String resultMessage){
+
+        if (resultMessage.equals("4A0B")) {
+            return winMessage;
+        }
+
+        setChance(chance-1);
+        if (chance == 0) {
+            return loseMessage;
+        }
+
+        return resultMessage;
+
+    }
+
     private String calculateResult(String input){
 
         final ArrayList<String> result = new ArrayList();
-        Arrays.asList(input.split(""))
-                .stream().forEach(element ->
+        List<String> inputStringToList = Arrays.asList(input.split(""));
+
+        inputStringToList.stream().forEach(element ->
                         result.add(
                                 input.indexOf(element) ==  answer.indexOf(element) ? "A" :
                                         answer.contains(element) ? "B" : ""
