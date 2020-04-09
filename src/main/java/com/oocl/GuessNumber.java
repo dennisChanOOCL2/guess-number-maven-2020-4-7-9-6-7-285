@@ -11,6 +11,8 @@ public class GuessNumber {
     public static final String WIN_MESSAGE = "You Win !";
     public static final String LOSE_MESSAGE = "You Lose !";
     public static final String ERROR_MESSAGE = "Wrong Input，Input again";
+    public static final String CORRECT_NUMBER_AND_POSITION = "A";
+    public static final String CORRECT_NUMBER_BUT_WRONG_POSITION = "B";
     private String answer;
 
 
@@ -46,7 +48,7 @@ public class GuessNumber {
     }
 
     private String checkWinLose(String resultMessage){
-        if (resultMessage.equals("4A0B")) {
+        if (resultMessage.equals("4"+CORRECT_NUMBER_AND_POSITION+"0"+CORRECT_NUMBER_BUT_WRONG_POSITION)) {
             return WIN_MESSAGE;
         }
 
@@ -60,18 +62,21 @@ public class GuessNumber {
     }
 
     private String calculateResult(String input){
-
         final ArrayList<String> result = new ArrayList();
         List<String> inputStringToList = Arrays.asList(input.split(""));
 
         inputStringToList.stream().forEach(element ->
                         result.add(
-                                input.indexOf(element) ==  answer.indexOf(element) ? "A" :
-                                        answer.contains(element) ? "B" : ""
+                                input.indexOf(element) ==  answer.indexOf(element) ? CORRECT_NUMBER_AND_POSITION :
+                                        answer.contains(element) ? CORRECT_NUMBER_BUT_WRONG_POSITION : ""
                         )
                 );
 
-        String returnString = Collections.frequency(result, "A") + "A" + Collections.frequency(result, "B") + "B";
+        String returnString = Collections.frequency(result, CORRECT_NUMBER_AND_POSITION)
+                + CORRECT_NUMBER_AND_POSITION
+                + Collections.frequency(result, CORRECT_NUMBER_BUT_WRONG_POSITION)
+                + CORRECT_NUMBER_BUT_WRONG_POSITION;
+
         return returnString;
     }
 

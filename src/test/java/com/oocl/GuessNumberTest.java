@@ -22,7 +22,7 @@ public class GuessNumberTest {
         String answer = guessNumber.getAnswerForTesting();
         String result = guessNumber.guess(answer);
 
-        assertThat(result, is("4A0B"));
+        assertThat(result, is(guessNumber.WIN_MESSAGE));
     }
 
     @Test
