@@ -33,31 +33,29 @@ public class GuessNumber {
     public String guess(String input){
 
         String errorMessage = validInput(input);
-        
-        if (errorMessage == "") {
-            String calculateInput = calculateResult(input);
-            String resultMessage = checkWinLose(calculateInput);
-            return resultMessage;
 
-        } else {
+        if(errorMessage != ""){
             return errorMessage;
         }
+
+        String resultMessage = calculateResult(input);
+        String returnMessage = checkWinLose(resultMessage);
+        return returnMessage;
 
     }
 
     private String checkWinLose(String resultMessage){
-
         if (resultMessage.equals("4A0B")) {
             return winMessage;
         }
 
         setChance(chance-1);
+
         if (chance == 0) {
             return loseMessage;
         }
 
         return resultMessage;
-
     }
 
     private String calculateResult(String input){
@@ -94,6 +92,10 @@ public class GuessNumber {
     private String validInput(String input){
         boolean hasDuplicate = checkInputHasDuplicate(input);
 
+        if(!isNumeric(input)){
+            return "Wrong Input，Input again";
+        }
+
         if(hasDuplicate){
             return "Wrong Input，Input again";
         }
@@ -106,7 +108,8 @@ public class GuessNumber {
 
     private boolean checkInputHasDuplicate(String input){
         List<String> inputStringList = Arrays.asList(input.split(""));
-        String checking = inputStringList.stream().filter(element -> Collections.frequency(inputStringList, element) > 1)
+        String checking = inputStringList.stream().filter(
+                element -> Collections.frequency(inputStringList, element) > 1)
                 .findFirst()
                 .orElse("");
         if(checking.equals("")){
@@ -115,12 +118,23 @@ public class GuessNumber {
         return true;
     }
 
-
     private int getNumberFromList(List<Integer> numberList){
         Random random = new Random();
         int randomIndex = random.nextInt(numberList.size());
         int result = numberList.get(randomIndex);
         numberList.remove(randomIndex);
         return result;
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double number = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 }
