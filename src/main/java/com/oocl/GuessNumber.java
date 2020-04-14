@@ -1,8 +1,9 @@
 package com.oocl;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuessNumber {
 
@@ -10,8 +11,6 @@ public class GuessNumber {
     public static final String WIN_MESSAGE = "You Win !";
     public static final String LOSE_MESSAGE = "You Lose !";
     public static final String ERROR_MESSAGE = "Wrong Input，Input again";
-    public static final String CORRECT_NUMBER_AND_POSITION = "A";
-    public static final String CORRECT_NUMBER_BUT_WRONG_POSITION = "B";
     public static final String WIN_RESULT = "4A0B";
     public static final String ANSWER_RESULT_PATTERN = "%sA%sB";
 
@@ -64,23 +63,24 @@ public class GuessNumber {
     }
 
     protected String calculateResult(String inputNumbers){
-        int positionAndNumberCorrectCount = 0;
-        int onlyNumberCorrectCount = 0;
+        AtomicInteger positionAndNumberCorrectCount = new AtomicInteger (0);
+        AtomicInteger  onlyNumberCorrectCount = new AtomicInteger (0);
 
-        for(char number : inputNumbers.toCharArray()){
-            boolean isPositionAndNumberCorrect = this.answer.contains(Character.toString(number))
-                    && this.answer.indexOf(number) == inputNumbers.indexOf(number);
+        Arrays.asList(inputNumbers.split("")).forEach(number ->
+                {
+                    boolean isPositionAndNumberCorrect = this.answer.contains(number)
+                            && this.answer.indexOf(number) == inputNumbers.indexOf(number);
 
-            boolean isNumberCorrectWithWrongPosition = this.answer.contains(Character.toString(number))
-                    && this.answer.indexOf(number) != inputNumbers.indexOf(number);
+                    boolean isNumberCorrectWithWrongPosition = this.answer.contains(number)
+                            && this.answer.indexOf(number) != inputNumbers.indexOf(number);
 
-            if(isPositionAndNumberCorrect){
-                positionAndNumberCorrectCount ++ ;
-            }
-            if(isNumberCorrectWithWrongPosition){
-                onlyNumberCorrectCount ++ ;
-            }
-        }
+                    if(isPositionAndNumberCorrect){
+                        positionAndNumberCorrectCount.getAndIncrement() ;
+                    }
+                    if(isNumberCorrectWithWrongPosition){
+                        onlyNumberCorrectCount .getAndIncrement() ;
+                    }
+                });
 
         return String.format(ANSWER_RESULT_PATTERN, positionAndNumberCorrectCount, onlyNumberCorrectCount);
     }
@@ -114,7 +114,7 @@ public class GuessNumber {
             return false;
         }
         try {
-            double number = Double.parseDouble(strNum);
+            Double.parseDouble(strNum);
         } catch (NumberFormatException nfe) {
             return false;
         }

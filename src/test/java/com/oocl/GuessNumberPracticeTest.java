@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.Scanner;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -28,7 +26,7 @@ public class GuessNumberPracticeTest {
         String inputNumber = "1234";
         String result = game.guess(inputNumber);
 
-        assertThat(result, is("4A0B"));
+        assertThat(result, is("You Win !"));
     }
 
     @Test
