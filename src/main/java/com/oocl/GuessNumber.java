@@ -66,6 +66,7 @@ public class GuessNumber {
     protected String calculateResult(String inputNumbers){
         int positionAndNumberCorrectCount = 0;
         int onlyNumberCorrectCount = 0;
+
         for(char number : inputNumbers.toCharArray()){
             boolean isPositionAndNumberCorrect = this.answer.contains(Character.toString(number))
                     && this.answer.indexOf(number) == inputNumbers.indexOf(number);
@@ -83,20 +84,6 @@ public class GuessNumber {
 
         return String.format(ANSWER_RESULT_PATTERN, positionAndNumberCorrectCount, onlyNumberCorrectCount);
     }
-
-//    private void generateAnswer(){
-//        List<Integer> possibleAnsList = IntStream.rangeClosed(0, 9).boxed()
-//                .collect(Collectors.toList());
-//
-//        int firstDigit = getNumberFromList(possibleAnsList);
-//        int secondDigit = getNumberFromList(possibleAnsList);
-//        int thirdDigit = getNumberFromList(possibleAnsList);
-//        int FourthDigit = getNumberFromList(possibleAnsList);
-//
-//        StringBuilder answerStrBuilder = new StringBuilder(ANSWER_LENGTH);
-//        answerStrBuilder.append(firstDigit).append(secondDigit).append(thirdDigit).append(FourthDigit);
-//        this.answer = answerStrBuilder.toString();
-//    }
 
     private String validInput(String input){
         boolean hasDuplicate = checkInputHasDuplicate(input);
@@ -122,14 +109,6 @@ public class GuessNumber {
         return true;
     }
 
-    private int getNumberFromList(List<Integer> numberList){
-        Random random = new Random();
-        int randomIndex = random.nextInt(numberList.size());
-        int result = numberList.get(randomIndex);
-        numberList.remove(randomIndex);
-        return result;
-    }
-
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -142,22 +121,4 @@ public class GuessNumber {
         return true;
     }
 
-    private String calculateResult_with_steam(String input){
-        ArrayList<String> result = new ArrayList();
-        List<String> inputStringToList = Arrays.asList(input.split(""));
-
-        inputStringToList.forEach(element ->
-                result.add(
-                        input.indexOf(element) ==  answer.indexOf(element) ? CORRECT_NUMBER_AND_POSITION :
-                                answer.contains(element) ? CORRECT_NUMBER_BUT_WRONG_POSITION : ""
-                )
-        );
-
-        String returnString = Collections.frequency(result, CORRECT_NUMBER_AND_POSITION)
-                + CORRECT_NUMBER_AND_POSITION
-                + Collections.frequency(result, CORRECT_NUMBER_BUT_WRONG_POSITION)
-                + CORRECT_NUMBER_BUT_WRONG_POSITION;
-
-        return returnString;
-    }
 }
