@@ -44,6 +44,7 @@ public class GuessNumber {
 
         String resultMessage = calculateResult(input);
         String returnMessage = checkWinLose(resultMessage);
+
         return returnMessage;
 
     }
@@ -87,10 +88,10 @@ public class GuessNumber {
 
     private String validInput(String input){
         boolean hasDuplicate = checkInputHasDuplicate(input);
-
-        if(!isNumeric(input)
-                || hasDuplicate
-                || input.length() != ANSWER_LENGTH){
+        boolean validLength = (input.length() == ANSWER_LENGTH);
+        if(hasDuplicate
+                || !isNumeric(input)
+                || !validLength){
             return ERROR_MESSAGE;
         }
 
